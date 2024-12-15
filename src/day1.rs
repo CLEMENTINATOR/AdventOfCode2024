@@ -1,7 +1,28 @@
 type Num = u32;
 
 pub fn part1(input: &str) -> Num {
-    0
+    let mut list1 = Vec::new();
+    let mut list2 = Vec::new();
+
+    for line in input.lines() {
+        let a: Vec<u32> = line
+            .split_whitespace()
+            .filter_map(|s| s.parse().ok())
+            .collect();
+
+        list1.push(a[0]);
+        list2.push(a[1]);
+    }
+
+    list1.sort();
+    list2.sort();
+
+    let mut res = 0;
+    for i in 0..list1.len() {
+        let diff: i32 = (list1[i] as i32) - (list2[i] as i32);
+        res += diff.abs();
+    }
+    return res.try_into().unwrap();
 }
 
 pub fn part2(input: &str) -> Num {
@@ -13,7 +34,12 @@ mod tests {
     use super::*;
 
     const EXAMPLE: &str = indoc::indoc! {"
-        REPLACE_ME
+3   4
+4   3
+2   5
+1   3
+3   9
+3   3
 "};
 
     #[test]
