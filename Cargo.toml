@@ -1,0 +1,13 @@
+[package]
+name = "aoc2024"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+clap = { version = "4.4.10", features = ["derive"] }
+paste = "1.0.15"
+
+[dev-dependencies]
+criterion = { version = "2.7.2", package = "codspeed-criterion-compat", default-features = false }
+paste = "1.0.15"
+indoc = "2.0.5"
