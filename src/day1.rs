@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 type Num = u32;
 
 pub fn part1(input: &str) -> Num {
@@ -26,7 +28,26 @@ pub fn part1(input: &str) -> Num {
 }
 
 pub fn part2(input: &str) -> Num {
-    0
+    let mut list1 = Vec::new();
+    let mut counts = HashMap::new();
+
+    for line in input.lines() {
+        let a: Vec<u32> = line
+            .split_whitespace()
+            .filter_map(|s| s.parse().ok())
+            .collect();
+
+        list1.push(a[0]);
+        *counts.entry(a[1]).or_insert(0) += 1;
+    }
+
+    let mut res = 0;
+    for item in list1 {
+        let count = *counts.get(&item).unwrap_or(&0);
+        res += count * item;
+    }
+
+    return res;
 }
 
 #[cfg(test)]
@@ -44,8 +65,8 @@ mod tests {
 
     #[test]
     fn example() {
-        assert_eq!(part1(EXAMPLE), 0);
-        assert_eq!(part2(EXAMPLE), 0);
+        assert_eq!(part1(EXAMPLE), 11);
+        assert_eq!(part2(EXAMPLE), 31);
     }
 
     #[test]
@@ -53,7 +74,7 @@ mod tests {
         let input = crate::utils::get_day_input!();
         let output = part1(&input);
         println!("Part 1: {}", output);
-        assert_eq!(output, 0);
+        assert_eq!(output, 1765812);
     }
 
     #[test]
@@ -61,6 +82,6 @@ mod tests {
         let input = crate::utils::get_day_input!();
         let output = part2(&input);
         println!("Part 2: {}", output);
-        assert_eq!(output, 0);
+        assert_eq!(output, 20520794);
     }
 }
